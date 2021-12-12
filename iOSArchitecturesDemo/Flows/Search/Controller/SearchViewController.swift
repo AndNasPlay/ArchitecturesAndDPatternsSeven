@@ -109,17 +109,14 @@ extension SearchViewController: UISearchBarDelegate {
         }
         
         presenter.viewDidSearch(with: query)
-//        self.requestApps(with: query)
     }
 }
 
 extension SearchViewController: SearchViewInput {
+	func throbber(show: Bool) { }
+
     // MARK: - Private
-    
-    func throbber(show: Bool) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = show
-    }
-    
+
     func showError(error: Error) {
         let alert = UIAlertController(title: "Error", message: "\(error.localizedDescription)", preferredStyle: .alert)
         let actionOk = UIAlertAction(title: "OK", style: .cancel, handler: nil)

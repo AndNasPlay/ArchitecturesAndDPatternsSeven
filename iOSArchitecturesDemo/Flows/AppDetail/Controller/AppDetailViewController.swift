@@ -13,6 +13,10 @@ final class AppDetailViewController: UIViewController {
     public var app: ITunesApp
     
     lazy var headerViewController = AppDetailHeaderViewController(app: app)
+
+	lazy var headerRatingViewController = AppDetailRatingViewController(app: app)
+
+	lazy var headerHistoryViewController = AppDetailVersionHistoryViewController(app: app)
     
     private let imageDownloader = ImageDownloader()
     
@@ -51,39 +55,55 @@ final class AppDetailViewController: UIViewController {
         
         addChildViewController()
         addDescriptionViewController()
+		addAppDetailVersionHistoryViewController()
         
     }
     
     private func addChildViewController() {
         self.addChild(headerViewController)
         self.view.addSubview(headerViewController.view)
-        
+
         self.headerViewController.didMove(toParent: self)
-        
+
         headerViewController.view.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             headerViewController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-            headerViewController.view.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            headerViewController.view.rightAnchor.constraint(equalTo: self.view.rightAnchor)
+			headerViewController.view.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
+			headerViewController.view.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
+			headerViewController.view.heightAnchor.constraint(equalToConstant: 150.0)
         ])
     }
     
     private func addDescriptionViewController() {
-        // Дз: Добавить дочерний вью контроллер
-        let vc = UIViewController()
-        
-        self.addChild(vc)
-        self.view.addSubview(vc.view)
-        vc.didMove(toParent: self)
-        
-        vc.view.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            vc.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            vc.view.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            vc.view.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            vc.view.heightAnchor.constraint(equalToConstant: 250.0)
-        ])
+		self.addChild(headerRatingViewController)
+		self.view.addSubview(headerRatingViewController.view)
+
+		headerRatingViewController.view.translatesAutoresizingMaskIntoConstraints = false
+		self.headerRatingViewController.didMove(toParent: self)
+
+		NSLayoutConstraint.activate([
+			headerRatingViewController.view.topAnchor.constraint(equalTo: self.view.subviews[0].bottomAnchor),
+			headerRatingViewController.view.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+			headerRatingViewController.view.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+			headerRatingViewController.view.heightAnchor.constraint(equalToConstant: 50.0)
+		])
+
     }
+
+	private func addAppDetailVersionHistoryViewController() {
+		self.addChild(headerHistoryViewController)
+		self.view.addSubview(headerHistoryViewController.view)
+
+		headerHistoryViewController.view.translatesAutoresizingMaskIntoConstraints = false
+		self.headerHistoryViewController.didMove(toParent: self)
+
+		NSLayoutConstraint.activate([
+			headerHistoryViewController.view.topAnchor.constraint(equalTo: self.view.subviews[1].bottomAnchor, constant: 12.0),
+			headerHistoryViewController.view.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+			headerHistoryViewController.view.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+			headerHistoryViewController.view.heightAnchor.constraint(equalToConstant: 150.0)
+		])
+
+	}
 }

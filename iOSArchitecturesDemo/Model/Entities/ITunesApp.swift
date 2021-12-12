@@ -22,6 +22,19 @@ public struct ITunesApp: Codable {
     public let size: Bytes?
     public let iconUrl: String?
     public let screenshotUrls: [String]
+	public let userRatingCount: Int?
+	public let contentAdvisoryRating: Rating?
+	public let genres: [String]?
+	public let version: String?
+	public let currentVersionReleaseDate: String?
+	public let releaseNotes: String?
+
+	public enum Rating: String, Codable {
+		case the12 = "12+"
+		case the9 = "9+"
+		case the17 = "17+"
+		case the4 = "4+"
+	}
     
     // MARK: - Codable
     
@@ -36,6 +49,7 @@ public struct ITunesApp: Codable {
         case size = "fileSizeBytes"
         case iconUrl = "artworkUrl512"
         case screenshotUrls = "screenshotUrls"
+		case userRatingCount, contentAdvisoryRating, genres, version, currentVersionReleaseDate, releaseNotes
     }
     
     public init(from decoder: Decoder) throws {
@@ -50,6 +64,12 @@ public struct ITunesApp: Codable {
         self.size = (try? container.decode(String.self, forKey: .size)) >>- { Bytes($0) }
         self.iconUrl = try? container.decode(String.self, forKey: .iconUrl)
         self.screenshotUrls = (try? container.decode([String].self, forKey: .screenshotUrls)) ?? []
+		self.userRatingCount = try container.decode(Int.self, forKey: .userRatingCount)
+		self.contentAdvisoryRating = try container.decode(Rating.self, forKey: .contentAdvisoryRating)
+		self.genres = (try? container.decode([String].self, forKey: .genres)) ?? []
+		self.version = try? container.decode(String.self, forKey: .version)
+		self.currentVersionReleaseDate = try? container.decode(String.self, forKey: .currentVersionReleaseDate)
+		self.releaseNotes = try? container.decode(String.self, forKey: .releaseNotes)
     }
     
     // MARK: - Init
@@ -63,7 +83,13 @@ public struct ITunesApp: Codable {
                   averageRatingForCurrentVersion: Float?,
                   size: Bytes?,
                   iconUrl: String?,
-                  screenshotUrls: [String]) {
+                  screenshotUrls: [String],
+				  userRatingCount: Int?,
+				  contentAdvisoryRating: Rating,
+				  genres: [String],
+				  version: String?,
+				  currentVersionReleaseDate: String?,
+				  releaseNotes: String?) {
         self.appName = appName
         self.appUrl = appUrl
         self.company = company
@@ -74,5 +100,11 @@ public struct ITunesApp: Codable {
         self.size = size
         self.iconUrl = iconUrl
         self.screenshotUrls = screenshotUrls
+		self.userRatingCount = userRatingCount
+		self.contentAdvisoryRating = contentAdvisoryRating
+		self.genres = genres
+		self.version = version
+		self.currentVersionReleaseDate = currentVersionReleaseDate
+		self.releaseNotes = releaseNotes
     }
 }

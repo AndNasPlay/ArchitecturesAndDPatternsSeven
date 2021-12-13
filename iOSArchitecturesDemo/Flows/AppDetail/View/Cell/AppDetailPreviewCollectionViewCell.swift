@@ -15,7 +15,7 @@ class AppDetailPreviewCollectionViewCell: UICollectionViewCell {
 	private(set) lazy var imageView: UIImageView = {
 		let imageView = UIImageView()
 		imageView.translatesAutoresizingMaskIntoConstraints = false
-		imageView.layer.cornerRadius = 10.0
+		imageView.contentMode = .scaleAspectFill
 		imageView.layer.masksToBounds = true
 		return imageView
 	}()
@@ -30,13 +30,13 @@ class AppDetailPreviewCollectionViewCell: UICollectionViewCell {
 	}
 
 	func setupUI() {
-		addSubview(imageView)
+		contentView.addSubview(imageView)
 
 		NSLayoutConstraint.activate([
 			imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 			imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-			imageView.heightAnchor.constraint(equalToConstant: 696.0),
-			imageView.widthAnchor.constraint(equalToConstant: 392.0)
+			imageView.heightAnchor.constraint(equalToConstant: 300),
+			imageView.widthAnchor.constraint(equalToConstant: 150),
 		])
 	}
 

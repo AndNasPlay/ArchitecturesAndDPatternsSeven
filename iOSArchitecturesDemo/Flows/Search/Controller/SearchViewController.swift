@@ -15,6 +15,8 @@ final class SearchViewController: UIViewController {
     private var searchView: SearchView {
         return self.view as! SearchView
     }
+
+	var searchType: SearchModel
     
     private let searchService = ITunesSearchService()
     var searchResults = [ITunesApp]() {
@@ -24,6 +26,14 @@ final class SearchViewController: UIViewController {
             searchView.searchBar.resignFirstResponder()
         }
     }
+
+	var searchResultsSongs = [ITunesSong]() {
+		didSet {
+			searchView.tableView.isHidden = false
+			searchView.tableView.reloadData()
+			searchView.searchBar.resignFirstResponder()
+		}
+	}
     
     private struct Constants {
         static let reuseIdentifier = "reuseId"
@@ -31,8 +41,9 @@ final class SearchViewController: UIViewController {
     
     private let presenter: SearchViewOutput
     
-    init(presenter: SearchViewOutput) {
+	init(presenter: SearchViewOutput, searchType: SearchModel) {
         self.presenter = presenter
+		self.searchType = searchType
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -67,7 +78,12 @@ final class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResults.count
+		if searchType == .app {
+			return searchResults.count
+		} else {
+			return searchResultsSongs.count
+		}
+
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -75,10 +91,17 @@ extension SearchViewController: UITableViewDataSource {
         guard let cell = dequeuedCell as? AppCell else {
             return dequeuedCell
         }
-        let app = self.searchResults[indexPath.row]
-        let cellModel = AppCellModelFactory.cellModel(from: app)
-        cell.configure(with: cellModel)
-        return cell
+		if searchType == .app {
+			let app = self.searchResults[indexPath.row]
+			let cellModel = AppCellModelFactory.cellModel(from: app)
+			cell.configure(with: cellModel)
+			return cell
+		} else {
+			let song = self.searchResultsSongs[indexPath.row]
+			let cellModel = SongCellModelFactory.cellModel(from: song)
+			cell.configureSong(with: cellModel)
+			return cell
+		}
     }
 }
 
@@ -87,11 +110,17 @@ extension SearchViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let app = searchResults[indexPath.row]
-        let appDetaillViewController = AppDetailViewController(app: app)
-        appDetaillViewController.app = app
-        presenter.viewDidSelectApp(app)
-//        navigationController?.pushViewController(appDetaillViewController, animated: true)
+		if searchType == .app {
+			let app = searchResults[indexPath.row]
+			let appDetaillViewController = AppDetailViewController(app: app)
+			appDetaillViewController.app = app
+			presenter.viewDidSelectApp(app)
+		} else {
+			let song = searchResultsSongs[indexPath.row]
+			let songDetaillViewController = SongDetailViewController(song: song)
+			songDetaillViewController.song = song
+			presenter.viewDidSelectSong(song)
+		}
     }
 }
 
@@ -107,12 +136,17 @@ extension SearchViewController: UISearchBarDelegate {
             searchBar.resignFirstResponder()
             return
         }
-        
-        presenter.viewDidSearch(with: query)
+
+		if searchType == .app {
+			presenter.viewDidSearch(with: query)
+		} else {
+			presenter.viewDidSearchSong(with: query)
+		}
     }
 }
 
 extension SearchViewController: SearchViewInput {
+
 	func throbber(show: Bool) { }
 
     // MARK: - Private

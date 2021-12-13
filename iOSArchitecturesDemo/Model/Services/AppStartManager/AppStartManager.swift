@@ -15,16 +15,20 @@ final class AppStartManager {
     init(window: UIWindow?) {
         self.window = window
     }
-    
+
     func start() {
-        let rootVC = SearchBuilder.build()
-        rootVC.navigationItem.title = "Search via iTunes"
+        let appVC = SearchBuilder.build()
+        appVC.navigationItem.title = "Search app in store"
+
+		let songVC = SearchBuilder.buildSongFinder()
+		songVC.navigationItem.title = "Search app in store"
         
         let navVC = self.configuredNavigationController
-        navVC.viewControllers = [rootVC]
+        navVC.viewControllers = [appVC, songVC]
         
         window?.rootViewController = navVC
         window?.makeKeyAndVisible()
+
     }
     
     private lazy var configuredNavigationController: UINavigationController = {

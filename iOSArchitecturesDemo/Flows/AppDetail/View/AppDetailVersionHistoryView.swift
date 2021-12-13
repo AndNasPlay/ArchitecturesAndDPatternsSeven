@@ -30,7 +30,7 @@ class AppDetailVersionHistoryView: UIView {
 		button.setTitle("История версий", for: .normal)
 		button.setTitleColor(.systemBlue, for: .normal)
 		button.titleLabel?.font = UIFont.boldSystemFont(ofSize: titleSize)
-		button.backgroundColor = .white
+		button.contentHorizontalAlignment = .right
 		return button
 	}()
 
@@ -56,7 +56,7 @@ class AppDetailVersionHistoryView: UIView {
 		return label
 	}()
 
-	private(set) lazy var updateTitleLable: UILabel = {
+	lazy var updateTitleLable: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.textColor = .black

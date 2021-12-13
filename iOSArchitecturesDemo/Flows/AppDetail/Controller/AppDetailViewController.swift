@@ -73,7 +73,7 @@ final class AppDetailViewController: UIViewController {
 			headerViewController.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
 			headerViewController.view.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
 			headerViewController.view.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
-			headerViewController.view.heightAnchor.constraint(equalToConstant: 150.0)
+			headerViewController.view.heightAnchor.constraint(equalToConstant: 120.0)
 		])
 	}
 

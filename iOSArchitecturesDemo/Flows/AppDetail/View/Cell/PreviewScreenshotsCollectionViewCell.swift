@@ -1,16 +1,16 @@
 //
-//  AppDetailPreviewCollectionViewCell.swift
+//  PreviewScreenshotsCollectionViewCell.swift
 //  iOSArchitecturesDemo
 //
-//  Created by Андрей Щекатунов on 08.12.2021.
+//  Created by Андрей Щекатунов on 13.12.2021.
 //  Copyright © 2021 ekireev. All rights reserved.
 //
 
 import UIKit
 
-class AppDetailPreviewCollectionViewCell: UICollectionViewCell {
+class PreviewScreenshotsCollectionViewCell: UICollectionViewCell {
 
-	static let cellIdentifier = "identifier"
+	static let cellIdentifier = "identifierForScreenshotsCollectionViewCell"
 
 	private(set) lazy var imageView: UIImageView = {
 		let imageView = UIImageView()
@@ -34,10 +34,10 @@ class AppDetailPreviewCollectionViewCell: UICollectionViewCell {
 		contentView.addSubview(imageView)
 
 		NSLayoutConstraint.activate([
-			imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-			imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-			imageView.heightAnchor.constraint(equalToConstant: 260),
-			imageView.widthAnchor.constraint(equalToConstant: 130),
+			imageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10.0),
+			imageView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10.0),
+			imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10.0),
+			imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0)
 		])
 	}
 

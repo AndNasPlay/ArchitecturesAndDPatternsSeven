@@ -11,7 +11,7 @@ import Cosmos
 
 class AppDetailRatingView: UIView {
 
-	private let titleSize: CGFloat = 17.0
+	private let titleSize: CGFloat = 15.0
 
 	private(set) lazy var ratingView: CosmosView = {
 		let imageView = CosmosView()
@@ -36,7 +36,7 @@ class AppDetailRatingView: UIView {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.textColor = .lightGray
-		label.font = UIFont.systemFont(ofSize: 12.0)
+		label.font = UIFont.systemFont(ofSize: 10.0)
 		label.numberOfLines = 0
 		return label
 	}()
@@ -55,7 +55,7 @@ class AppDetailRatingView: UIView {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.textColor = .lightGray
-		label.font = UIFont.boldSystemFont(ofSize: 12.0)
+		label.font = UIFont.boldSystemFont(ofSize: 10.0)
 		label.textAlignment = .center
 		label.numberOfLines = 1
 		return label
@@ -75,7 +75,7 @@ class AppDetailRatingView: UIView {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.textColor = .lightGray
-		label.font = UIFont.boldSystemFont(ofSize: 12.0)
+		label.font = UIFont.boldSystemFont(ofSize: 10.0)
 		label.numberOfLines = 0
 		label.text = "Возраст"
 		return label

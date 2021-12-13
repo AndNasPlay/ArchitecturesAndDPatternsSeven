@@ -16,6 +16,8 @@ class AppDetailPreviewViewController: UIViewController, UICollectionViewDelegate
 
 	private let imageDownLoader = ImageDownloader()
 
+	private(set) lazy var previewScreenshotsViewController = PreviewScreenshotsViewController(imageArray: imageArray)
+
 	private(set) lazy var previewLable: UILabel = {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
@@ -77,7 +79,7 @@ class AppDetailPreviewViewController: UIViewController, UICollectionViewDelegate
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		return CGSize(width: 150, height: 300)
+		return CGSize(width: 130, height: 260)
 	}
 
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -86,6 +88,13 @@ class AppDetailPreviewViewController: UIViewController, UICollectionViewDelegate
 
 		return cell
 	}
+
+	func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		previewScreenshotsViewController.modalPresentationStyle = .popover
+		previewScreenshotsViewController.modalTransitionStyle = .coverVertical
+		present(previewScreenshotsViewController, animated: true, completion: nil)
+	}
+
 
 	private func setUI() {
 		self.view.addSubview(previewLable)

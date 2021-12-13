@@ -22,7 +22,7 @@ class AppDetailHeaderView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 18.0)
+        label.font = UIFont.boldSystemFont(ofSize: 16.0)
         label.numberOfLines = 2
         return label
     }()
@@ -41,7 +41,7 @@ class AppDetailHeaderView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("ОТКРЫТЬ", for: .normal)
 		button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 16.0
+        button.layer.cornerRadius = 15.0
         button.layer.masksToBounds = true
 		button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         return button
@@ -78,14 +78,14 @@ class AppDetailHeaderView: UIView {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 12.0),
             imageView.leftAnchor.constraint(equalTo: leftAnchor, constant: 16.0),
-            imageView.heightAnchor.constraint(equalToConstant: 120.0),
-            imageView.widthAnchor.constraint(equalToConstant: 120.0),
+            imageView.heightAnchor.constraint(equalToConstant: 110.0),
+            imageView.widthAnchor.constraint(equalToConstant: 110.0),
             
             titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 12.0),
             titleLabel.leftAnchor.constraint(equalTo: imageView.rightAnchor, constant: 16.0),
             titleLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -16.0),
             
-            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12.0),
+            subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 6.0),
             subtitleLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor),
             subtitleLabel.rightAnchor.constraint(equalTo: titleLabel.rightAnchor),
             
@@ -99,6 +99,6 @@ class AppDetailHeaderView: UIView {
 			sharedButton.heightAnchor.constraint(equalToConstant: 32.0),
 			sharedButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16.0)
         ])
-        
+
     }
 }

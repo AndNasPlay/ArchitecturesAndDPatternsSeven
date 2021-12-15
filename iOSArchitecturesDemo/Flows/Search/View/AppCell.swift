@@ -55,12 +55,6 @@ final class AppCell: UITableViewCell {
 		self.subtitleLabel.text = cellModel.subtitle
 		self.ratingLabel.text = cellModel.rating
 	}
-
-	func configureSong(with cellModel: SongCellModel) {
-		self.titleLabel.text = cellModel.artistName
-		self.subtitleLabel.text = cellModel.trackName
-		self.ratingLabel.text = cellModel.collectionName
-	}
 	
 	// MARK: - UI
 	

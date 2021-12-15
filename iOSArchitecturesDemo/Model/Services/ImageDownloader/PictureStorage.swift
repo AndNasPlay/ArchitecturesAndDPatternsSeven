@@ -16,6 +16,8 @@ final class PictureStorage {
 
 	var pictureDictionary: [String: UIImage] = [:]
 
+	var songImgDictionary: [String: UIImage] = [:]
+
 	var pictureCollectionViewDictionary: [String: UIImage] = [:]
 
 }

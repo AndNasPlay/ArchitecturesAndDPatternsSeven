@@ -12,12 +12,10 @@ class TabBarController: UITabBarController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
 		view.backgroundColor = .systemBackground
 		UITabBar.appearance().barTintColor = .systemBackground
-		tabBar.tintColor = .label
+		tabBar.tintColor = .black
 		setupVCs()
-
 	}
 
 	func setupVCs() {
@@ -31,16 +29,21 @@ class TabBarController: UITabBarController {
 		]
 	}
 
-
 	fileprivate func createNavController(
 		for rootViewController: UIViewController,
 		title: String,
-		image: UIImage) -> UIViewController {
+		image: UIImage) -> UINavigationController {
 		let navController = UINavigationController(rootViewController: rootViewController)
 		navController.tabBarItem.title = title
 		navController.tabBarItem.image = image
-		navController.navigationBar.prefersLargeTitles = true
+		navController.navigationBar.isTranslucent = false
+		navController.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+		navController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+		navController.view.backgroundColor = UIColor.varna
+
 		rootViewController.navigationItem.title = title
+		rootViewController.navigationController?.navigationBar.barTintColor = UIColor.varna
+
 		return navController
 	}
 }

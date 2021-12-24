@@ -36,13 +36,45 @@ class SongDetailInfoView: UIView {
 		return label
 	}()
 
+	private(set) lazy var progressView: UIProgressView = {
+		let progressView = UIProgressView()
+		progressView.translatesAutoresizingMaskIntoConstraints = false
+		progressView.progressTintColor = .black
+		return progressView
+	}()
+
 	private(set) lazy var playButton: UIButton = {
 		let button = UIButton()
 		button.translatesAutoresizingMaskIntoConstraints = false
-		button.setImage(UIImage(systemName: "play.circle.fill"), for: .normal)
-		button.backgroundColor = .lightGray
-		button.layer.cornerRadius = 25.0
+		button.setImage(UIImage(named: "playButton"), for: .normal)
+		button.layer.cornerRadius = 45.0
 		return button
+	}()
+
+	private(set) lazy var stopButton: UIButton = {
+		let button = UIButton()
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.setImage(UIImage(named: "stopButton"), for: .normal)
+		button.layer.cornerRadius = 45.0
+		return button
+	}()
+
+	private(set) lazy var pauseButton: UIButton = {
+		let button = UIButton()
+		button.translatesAutoresizingMaskIntoConstraints = false
+		button.setImage(UIImage(named: "pauseButton"), for: .normal)
+		button.layer.cornerRadius = 45.0
+		return button
+	}()
+
+	private(set) lazy var buttonStackView: UIStackView = {
+		let stack = UIStackView()
+		stack.alignment = .center
+		stack.spacing = 30.0
+		stack.axis = .horizontal
+		stack.distribution = .fillEqually
+		stack.translatesAutoresizingMaskIntoConstraints = false
+		return stack
 	}()
 
 	override init(frame: CGRect) {
@@ -59,7 +91,11 @@ class SongDetailInfoView: UIView {
 		self.addSubview(songImageView)
 		self.addSubview(songNameLable)
 		self.addSubview(playerNameLabel)
-		self.addSubview(playButton)
+		self.addSubview(buttonStackView)
+		self.addSubview(progressView)
+		self.buttonStackView.addArrangedSubview(pauseButton)
+		self.buttonStackView.addArrangedSubview(playButton)
+		self.buttonStackView.addArrangedSubview(stopButton)
 
 		NSLayoutConstraint.activate([
 			songImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor, constant: -50.0),
@@ -75,10 +111,14 @@ class SongDetailInfoView: UIView {
 			playerNameLabel.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 16.0),
 			playerNameLabel.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -16.0),
 
-			playButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-			playButton.topAnchor.constraint(equalTo: playerNameLabel.bottomAnchor, constant: 12.0),
-			playButton.widthAnchor.constraint(equalToConstant: 50.0),
-			playButton.heightAnchor.constraint(equalToConstant: 50.0)
+			progressView.topAnchor.constraint(equalTo: playerNameLabel.bottomAnchor, constant: 30.0),
+			progressView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 16.0),
+			progressView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -16.0),
+
+			buttonStackView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 30.0),
+			buttonStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 16.0),
+			buttonStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -16.0),
+			buttonStackView.heightAnchor.constraint(equalToConstant: 90.0)
 		])
 
 	}

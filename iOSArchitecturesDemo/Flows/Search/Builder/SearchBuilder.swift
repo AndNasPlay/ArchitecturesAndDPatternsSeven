@@ -9,18 +9,24 @@
 import UIKit
 
 class SearchBuilder {
-    
+
     static func build() -> (UIViewController & SearchViewInput) {
-        let presenter = SearchPresenter()
+		let interactor = SearchInteractor()
+		let router = SearchRouter()
+        let presenter = SearchPresenter(interactor: interactor, router: router)
 		let viewController = SearchViewController(presenter: presenter, searchType: .app)
+		router.viewController = viewController
         presenter.viewInput = viewController
         
         return viewController
     }
 
 	static func buildSongFinder() -> (UIViewController & SearchViewInput) {
-		let presenter = SearchPresenter()
+		let interactor = SearchInteractor()
+		let router = SearchRouter()
+		let presenter = SearchPresenter(interactor: interactor, router: router)
 		let viewController = SearchViewController(presenter: presenter, searchType: .song)
+		router.viewController = viewController
 		presenter.viewInput = viewController
 
 		return viewController

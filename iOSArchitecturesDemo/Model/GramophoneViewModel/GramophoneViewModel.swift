@@ -40,7 +40,6 @@ class GramophoneViewModel: GramophoneViewModelOutput  {
 extension GramophoneViewModel: GramophoneViewModelInput {
 
 	func play() {
-		print("play")
 		timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] (timer) in
 			guard let self = self else { return }
 
@@ -53,12 +52,10 @@ extension GramophoneViewModel: GramophoneViewModelInput {
 	}
 
 	func pause() {
-		print("pause")
 		timer?.invalidate()
 	}
 
 	func stop() {
-		print("stop")
 		timer?.invalidate()
 		progress = 0
 	}

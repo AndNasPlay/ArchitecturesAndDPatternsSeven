@@ -8,7 +8,15 @@
 
 import UIKit
 
+protocol SongDetailInfoViewDelegate: AnyObject {
+	func playButtonDidTap()
+	func stopButtonDidTap()
+	func pauseButtonDidTap()
+}
+
 class SongDetailInfoView: UIView {
+
+	weak var delegate: SongDetailInfoViewDelegate?
 
 	private(set) lazy var songImageView: UIImageView = {
 		let imageView = UIImageView()
@@ -47,7 +55,7 @@ class SongDetailInfoView: UIView {
 		let button = UIButton()
 		button.translatesAutoresizingMaskIntoConstraints = false
 		button.setImage(UIImage(named: "playButton"), for: .normal)
-		button.layer.cornerRadius = 45.0
+		button.layer.cornerRadius = 40.0
 		return button
 	}()
 
@@ -55,7 +63,7 @@ class SongDetailInfoView: UIView {
 		let button = UIButton()
 		button.translatesAutoresizingMaskIntoConstraints = false
 		button.setImage(UIImage(named: "stopButton"), for: .normal)
-		button.layer.cornerRadius = 45.0
+		button.layer.cornerRadius = 40.0
 		return button
 	}()
 
@@ -63,7 +71,7 @@ class SongDetailInfoView: UIView {
 		let button = UIButton()
 		button.translatesAutoresizingMaskIntoConstraints = false
 		button.setImage(UIImage(named: "pauseButton"), for: .normal)
-		button.layer.cornerRadius = 45.0
+		button.layer.cornerRadius = 40.0
 		return button
 	}()
 
@@ -93,12 +101,17 @@ class SongDetailInfoView: UIView {
 		self.addSubview(playerNameLabel)
 		self.addSubview(buttonStackView)
 		self.addSubview(progressView)
+
+		self.playButton.addTarget(self, action: #selector(handlePlayButtonTouchUpInseide), for: .touchUpInside)
+		self.stopButton.addTarget(self, action: #selector(handleStopButtonTouchUpInseide), for: .touchUpInside)
+		self.pauseButton.addTarget(self, action: #selector(handlePauseButtonTouchUpInseide), for: .touchUpInside)
+
 		self.buttonStackView.addArrangedSubview(pauseButton)
 		self.buttonStackView.addArrangedSubview(playButton)
 		self.buttonStackView.addArrangedSubview(stopButton)
 
 		NSLayoutConstraint.activate([
-			songImageView.centerYAnchor.constraint(equalTo: safeAreaLayoutGuide.centerYAnchor, constant: -50.0),
+			songImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 60.0),
 			songImageView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
 			songImageView.heightAnchor.constraint(equalToConstant: 100.0),
 			songImageView.widthAnchor.constraint(equalToConstant: 100.0),
@@ -118,8 +131,22 @@ class SongDetailInfoView: UIView {
 			buttonStackView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 30.0),
 			buttonStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: 16.0),
 			buttonStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -16.0),
-			buttonStackView.heightAnchor.constraint(equalToConstant: 90.0)
+			buttonStackView.heightAnchor.constraint(equalToConstant: 80.0)
 		])
+	}
 
+	@objc func handlePlayButtonTouchUpInseide() {
+		delegate?.playButtonDidTap()
+		playButton.backgroundColor = .lightGray
+	}
+
+	@objc func handleStopButtonTouchUpInseide() {
+		delegate?.stopButtonDidTap()
+		playButton.backgroundColor = .none
+	}
+
+	@objc func handlePauseButtonTouchUpInseide() {
+		delegate?.pauseButtonDidTap()
+		playButton.backgroundColor = .none
 	}
 }

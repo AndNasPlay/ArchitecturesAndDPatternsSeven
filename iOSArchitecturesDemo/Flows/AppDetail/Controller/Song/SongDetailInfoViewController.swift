@@ -8,13 +8,15 @@
 
 import UIKit
 
-class SongDetailInfoViewController: UIViewController {
+class SongDetailInfoViewController: UIViewController, SongDetailInfoViewDelegate {
 
 	private let song: ITunesSong
 
 	private var imageDictionary = PictureStorage.shared.songImgDictionary
 
 	private let imageDownLoader = ImageDownloader()
+
+	private var gramophoneViewModel: GramophoneViewModel?
 
 	private var songDetailHeaderView: SongDetailInfoView {
 		return self.view as! SongDetailInfoView
@@ -36,6 +38,11 @@ class SongDetailInfoViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		fillData()
+		songDetailHeaderView.delegate = self
+		gramophoneViewModel = GramophoneViewModel(progress: 0, onProgressViewChanged: { [weak self] (progress) in
+			guard let self = self else { return }
+			self.songDetailHeaderView.progressView.setProgress(Float(progress), animated: true)
+		})
 	}
 
 	private func fillData() {
@@ -60,5 +67,17 @@ class SongDetailInfoViewController: UIViewController {
 				}
 			}
 		}
+	}
+
+	func playButtonDidTap() {
+		gramophoneViewModel?.play()
+	}
+
+	func stopButtonDidTap() {
+		gramophoneViewModel?.stop()
+	}
+
+	func pauseButtonDidTap() {
+		gramophoneViewModel?.pause()
 	}
 }

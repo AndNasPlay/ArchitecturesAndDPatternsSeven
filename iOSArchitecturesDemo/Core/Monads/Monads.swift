@@ -9,8 +9,8 @@
 import Foundation
 
 precedencegroup MonadicPrecedence {
-    associativity: left
-    higherThan: BitwiseShiftPrecedence
+	associativity: left
+	higherThan: BitwiseShiftPrecedence
 }
 
 infix operator >>- : MonadicPrecedence
@@ -20,10 +20,10 @@ infix operator >>- : MonadicPrecedence
 @inline(__always)
 @discardableResult
 public func >>-<T, U>(a: T?, f: (T) throws -> U?) rethrows -> U? {
-    switch a {
-    case .some(let x):
-        return try f(x)
-    case .none:
-        return nil
-    }
+	switch a {
+	case .some(let x):
+		return try f(x)
+	case .none:
+		return nil
+	}
 }
